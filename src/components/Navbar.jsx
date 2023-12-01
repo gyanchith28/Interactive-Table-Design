@@ -16,7 +16,7 @@ const Navbar = () => {
               fontSize="xl"
               fontWeight="bold"
               fontFamily="heading"
-              ml={index !== 0 ? '2px' : '0'} // Add margin only for non-first letters
+              ml={index !== 0 ? '2px' : '0'} 
             >
               {letter}
             </Text>

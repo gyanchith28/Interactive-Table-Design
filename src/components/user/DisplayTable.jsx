@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   Thead,
@@ -9,14 +9,29 @@ import {
   TableContainer,
   Text,
   Icon,
+  Box,
 } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon, TimeIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  CloseIcon,
+  TimeIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
+} from "@chakra-ui/icons";
 
 export default function DisplayTable({ users, search }) {
+  const [sortField, setSortField] = useState("");
+  const [order, setOrder] = useState("asc");
+
+  const handleSortingChange = (field) => {
+    const sortOrder = field === sortField && order === "asc" ? "desc" : "asc";
+    setSortField(field);
+    setOrder(sortOrder);
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
       case "Approved":
-        return "green";
       case "Active":
         return "green";
       case "Rejected":
@@ -26,7 +41,23 @@ export default function DisplayTable({ users, search }) {
     }
   };
 
-  const filteredUsers = users.filter(
+  const sortedUsers = [...users].sort((a, b) => {
+    const comparison = order === "asc" ? 1 : -1;
+
+    const aStatus = a[sortField] || "";
+    const bStatus = b[sortField] || ""; 
+
+    if (sortField === "loan_start_date") {
+      return (
+        new Date(a[sortField]).getTime() -
+        new Date(b[sortField]).getTime()
+      ) * comparison;
+    } else {
+      return aStatus.localeCompare(bStatus) * comparison;
+    }
+  });
+
+  const filteredUsers = sortedUsers.filter(
     (user) =>
       user.fname.toLowerCase().includes(search.toLowerCase()) ||
       user.lname.toLowerCase().includes(search.toLowerCase()) ||
@@ -43,14 +74,38 @@ export default function DisplayTable({ users, search }) {
         .custom-table tr:nth-child(even) {
           background-color: #aedefc;
         }
+
+        .sort-icon {
+          margin-left: 0.5rem;
+        }
       `}</style>
       <Table variant="striped" className="custom-table">
         <Thead>
           <Tr>
-            <Th>Borrower</Th>
-            <Th>Loan Reference Num</Th>
-            <Th>Origination Date</Th>
-            <Th>Status</Th>
+            <Th onClick={() => handleSortingChange("fname")}>
+              Borrower{" "}
+              {sortField === "fname" && (
+                <Icon as={order === "asc" ? ArrowUpIcon : ArrowDownIcon} className="sort-icon" />
+              )}
+            </Th>
+            <Th onClick={() => handleSortingChange("loan_acc_num")}>
+              Loan Reference Num{" "}
+              {sortField === "loan_acc_num" && (
+                <Icon as={order === "asc" ? ArrowUpIcon : ArrowDownIcon} className="sort-icon" />
+              )}
+            </Th>
+            <Th onClick={() => handleSortingChange("loan_start_date")}>
+              Origination Date{" "}
+              {sortField === "loan_start_date" && (
+                <Icon as={order === "asc" ? ArrowUpIcon : ArrowDownIcon} className="sort-icon" />
+              )}
+            </Th>
+            <Th onClick={() => handleSortingChange("loan_status")}>
+              Status{" "}
+              {sortField === "loan_status" && (
+                <Icon as={order === "asc" ? ArrowUpIcon : ArrowDownIcon} className="sort-icon" />
+              )}
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
