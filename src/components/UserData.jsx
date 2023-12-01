@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Tr, Td } from "@chakra-ui/react";
 
 const API = "/api/raw/dxysM2mc";
 
@@ -26,15 +27,25 @@ const UserDataComponent = () => {
 
   return (
     <>
-      {users.map((curUser) => {
-        const { loan_id,loan_acc_num, fname, mname, lname, loan_start_date, loan_status } = curUser;
+      {users.map((curUser, index) => {
+        const { loan_id, loan_acc_num, fname, mname, lname, loan_start_date, loan_status } = curUser;
+        const isOdd = index % 2 === 0; // Check if the index is odd
+
         return (
-          <tr key={loan_id}>
-            <td>{fname + (mname ? ' ' + mname : '') + (lname ? ' ' + lname : '')}</td>
-            <td>{loan_acc_num}</td>
-            <td>{loan_start_date}</td>
-            <td>{loan_status}</td>
-          </tr>
+          <Tr key={loan_id}>
+            <Td _odd={{ bg: isOdd ? "#e0f4ff" : "" }} _even={{ bg: isOdd ? "" : "#aedefc" }}>
+              {fname + (mname ? ' ' + mname : '') + (lname ? ' ' + lname : '')}
+            </Td>
+            <Td _odd={{ bg: isOdd ? "#e0f4ff" : "" }} _even={{ bg: isOdd ? "" : "#aedefc" }}>
+              {loan_acc_num}
+            </Td>
+            <Td _odd={{ bg: isOdd ? "#e0f4ff" : "" }} _even={{ bg: isOdd ? "" : "#aedefc" }}>
+              {loan_start_date}
+            </Td>
+            <Td _odd={{ bg: isOdd ? "#e0f4ff" : "" }} _even={{ bg: isOdd ? "" : "#aedefc" }}>
+              {loan_status}
+            </Td>
+          </Tr>
         );
       })}
     </>
