@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const API = "/api/raw/dxysM2mc";
+const API = "https://corsproxy.io/?https://pastebin.com/raw/dxysM2mc";
 
 const useFetchData = () => {
   const [users, setUsers] = useState([]);
@@ -12,7 +12,7 @@ const useFetchData = () => {
       if (data && data.response) {
         setUsers(data.response);
       }
-
+      console.log(data);
     } catch (error) {
       console.error(error);
     }
