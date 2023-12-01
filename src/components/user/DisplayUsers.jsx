@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, GridItem, Box, Text } from "@chakra-ui/react";
 import DisplayTable from "./DisplayTable";
 import SearchUser from "./SearchUser";
-import useFetchData from "./FetchData";
+import useFetchData from "../../services/FetchData";
 import FilterUser from "./FilterUser";
 
 export default function DisplayUsers() {
