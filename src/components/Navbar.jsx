@@ -1,4 +1,3 @@
-// navbar.jsx
 import React from "react";
 import { Box, Flex, Spacer, Text, Icon } from "@chakra-ui/react";
 import { BsPersonCircle } from "react-icons/bs";
