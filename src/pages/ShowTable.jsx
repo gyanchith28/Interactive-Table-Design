@@ -1,13 +1,10 @@
-import React from 'react'
-import DisplayStats from '../components/DisplayStats'
-import DisplayTable from '../components/DisplayTable'
+import React from "react";
+import DisplayUsers from "../components/DisplayUsers";
 
 export default function ShowTable() {
   return (
     <div>
-        <DisplayStats />
-        <DisplayTable />
+      <DisplayUsers />
     </div>
-
-  )
+  );
 }

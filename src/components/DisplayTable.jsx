@@ -8,10 +8,14 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
-import useFetchData from "./FetchData"; // Adjust the path based on your project structure
 
-export default function DisplayTable() {
-  const users = useFetchData();
+export default function DisplayTable({ users, search }) {
+  const filteredUsers = users.filter(
+    (user) =>
+      user.fname.toLowerCase().includes(search.toLowerCase()) ||
+      user.lname.toLowerCase().includes(search.toLowerCase()) ||
+      user.loan_acc_num.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <TableContainer css="padding:60">
@@ -34,7 +38,7 @@ export default function DisplayTable() {
           </Tr>
         </Thead>
         <Tbody>
-          {users.map((user) => {
+          {filteredUsers.map((user) => {
             const {
               loan_id,
               loan_acc_num,
